@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class camera : MonoBehaviour
+{
+    float gMaxPos;                                              // 감자 최대높이 변수 정의
+    public int score=0;                                         // 변수 정의
+
+    void Update()
+    {
+        GameObject gamja = GameObject.Find("potato");               // 감자 오브젝트를 불러옴
+        float Gpos = gamja.transform.position.y;                    // 읽기 쉽게 바꿈
+
+        if (gMaxPos < Gpos)                                  //감자의 위치가 이전높이보다 높으면 실행       Gmaxpos : 이전높이 Gpos : 감자의 위치
+        {
+            if (Gpos > this.transform.position.y + 8)                    // 감자가 높이가 카메라를 기준으로 8만큼 더 높아지면 실행
+            {
+                this.transform.position = new Vector3(0, Gpos - 8, -10); // 카메라를 감자가 올라간 만큼 올려주기
+                score++;                                                //점수 카운트
+                Debug.Log(score);                                       //테스트 디버깅
+            }
+        }
+        gMaxPos = Gpos;                // 현재 감자 위치 저장
+    }
+}
+
+/*
+    9.18 수정 제안
+    9.22 수정 사항
+    
+    1. transform.postion 줄이기 -> pos
+    2. 변수명 변경 -> transdata -> gMaxpos
+    3. this 사용
+
+ */
+
+    
