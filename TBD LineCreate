@@ -1,0 +1,76 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Tuch_script : MonoBehaviour
+{
+    Vector2 poin;
+    public GameObject Get_Start_Box;
+    public GameObject Get_End_Box;
+    GameObject Start_Box;
+    GameObject En_Box;
+    LineRenderer lr;
+    BoxCollider Bx;
+
+
+    private int count = 0;
+
+    void Start()
+    {
+
+    }
+
+    
+    void Update()
+    {
+        poin = Camera.main.ScreenToWorldPoint(Input.mousePosition);         // 스크린좌표계를 월드 좌표계로 전환시킨다.
+        if (Input.GetMouseButtonDown(0))
+        {
+            if(count == 1)                         // 만약 이전에 박스가 있다면?
+            {
+                Destroy(Start_Box);                 // 시작박스 삭제
+                Destroy(En_Box);                    // 끝 박스 삭제
+                count = 0;
+            }
+            Start_Box = Instantiate(                // 마우스클릭시 시작 박스 동적 생산                    
+                Get_Start_Box,
+                poin,
+                Quaternion.identity);
+
+            
+            En_Box = Instantiate(                  // 마우스 클릭시 끝 박스 동적 생산
+                Get_End_Box,
+                poin,
+                Quaternion.identity);
+            
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            
+            En_Box.transform.position = poin;                   // 실시간으로 마우스 포지션 잡아서 박스 이동시켜주기
+
+            lr=Start_Box.GetComponent<LineRenderer>();          // 라인랜더러 컴포넌트 추가
+            lr.startWidth = .05f;                               // 시작 너비
+            lr.endWidth = .05f;                                 // 끝  너비
+
+
+            lr.SetPosition(0, GameObject.Find("start(Clone)").GetComponent<Transform>().position);     //라인 랜더러 시작위치(0) 을 GameObject 이름[start]을 찾아서 해당 좌표값에 실시간으로 고정시킴
+            lr.SetPosition(1, GameObject.Find("end(Clone)").GetComponent<Transform>().position);       //라인 랜더러 도착위치(1) 을 GameObject 이름[end]을 찾아서 해당 좌표값에 실시간으로 고정시킴
+
+
+        }
+
+
+        if (Input.GetMouseButtonUp(0))          //버튼을 놓았을때 카운트 세서 다음번에 삭제 시켜줌
+        {
+            count = 1;
+            Bx = Start_Box.GetComponent<BoxCollider>();
+
+        }
+
+
+    }
+
+    
+}
