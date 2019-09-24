@@ -1,0 +1,85 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BulgasliSpawn : MonoBehaviour
+{
+    bool enableSpawn = true;
+    
+    public GameObject bulgasli; //우리가 사용할 prefab
+
+    void Update()
+    {
+
+        Debug.Log(enableSpawn);
+
+        float randomX = Random.Range(-4, 4); //적이 나타날 x좌표의 랜덤 생성 범위 설정
+        float randomY = Random.Range(-1, 1); //적이 나타날 y좌표의 랜덤 생성 범위 설정
+        randomX += randomX + randomX;
+        randomY = randomY + transform.position.y;   // 불가사리 찍어내는 Empty[공장] 위치에서 +- 랜덤값 만큼 저장
+
+        float spawnPosiotion;
+        GameObject cam = GameObject.Find("Camera");     //카메라 받아옴
+        spawnPosiotion = cam.transform.position.y;      // 카메라 포지션 y값 받아옴
+
+        int spawn1 = Random.Range(-1, 2);               // 랜덤 생산 확률 계산
+        int spawn2 = Random.Range(-1, 2);
+        int spawn3 = Random.Range(-1, 2);
+        int spawn4 = Random.Range(-1, 2);
+        int spawn5 = Random.Range(-1, 2);
+
+        if((spawnPosiotion+1) %30 ==0)
+        {
+            //enableSpawn = true;
+        }
+
+        Debug.Log(spawnPosiotion);
+        Debug.Log(enableSpawn);
+
+        if (enableSpawn== true)         // 랜덤 동적생산
+        {
+            enableSpawn = false;
+
+            Debug.Log(enableSpawn);
+
+            if (spawn1 == 1)
+            {
+                GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(-6, spawnPosiotion, transform.position.z), Quaternion.identity);
+
+            }
+
+            if (spawn2 == 1)
+            {
+                GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(-3, spawnPosiotion, transform.position.z), Quaternion.identity);
+
+            }
+
+            if (spawn3 == 1)
+            {
+                GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(0, spawnPosiotion, transform.position.z), Quaternion.identity);
+
+            }
+
+            if (spawn4 == 1)
+            {
+                GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(3, spawnPosiotion, transform.position.z), Quaternion.identity);
+
+            }
+
+            if (spawn5 == 1)
+            {
+                GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(6, spawnPosiotion, transform.position.z), Quaternion.identity);
+
+            }
+
+        }
+        enableSpawn = false;
+    }
+
+    void Start()
+    {
+        InvokeRepeating("SpawnEnemy", 1, 1); //3초후 부터, SpawnEnemy함수를 1초마다 반복해서 실행 시킵니다.
+    }
+    
+
+}
