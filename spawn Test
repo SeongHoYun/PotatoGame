@@ -1,0 +1,91 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BulgasliSpawn : MonoBehaviour
+{
+    bool enableSpawn = true;
+
+    public GameObject bulgasli; //우리가 사용할 prefab
+           
+
+    void spawn_print(float posY)
+    {
+        float railLine = -6;
+
+        int rail = Random.Range(-1, 1);             //레일 위치설정 랜덤값
+        if (rail==0)        
+        {
+            railLine = railLine - 1.5f;              //50% 확률로 레일위치를 1.5 바꿈
+            for(int i = 0; i<5;i++)         // 5번 반복함
+            {
+                railLine += 3;
+                int spawnPst = Random.Range(0,2);  // 스폰될 확률 3분의1 확률로 지정
+                if (spawnPst == 0)
+                {
+
+                    GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(railLine, posY, this.transform.position.z), Quaternion.identity);
+
+                }
+
+            }
+        }        
+
+        
+
+    }
+
+
+    void Update()
+    {
+        float spawnPosiotion;
+        GameObject cam = GameObject.Find("Camera");     //카메라 받아옴
+        spawnPosiotion = cam.transform.position.y;      // 카메라 포지션 y값 받아옴
+        float Remeber = 100;
+        //Debug.Log(spawnPosiotion);
+        float loopBreak = (spawnPosiotion + 1.0f) % 10;
+        
+        //Debug.Log(loopBreak);
+        if (loopBreak > 0 && loopBreak < 1)
+        {
+
+            float re = Remeber - spawnPosiotion;
+
+            //Debug.Log(re);
+            Debug.Log(Remeber);
+            Debug.Log(spawnPosiotion);
+            if (re > 1 || re < -1)
+            {
+                enableSpawn = true;
+                Remeber = spawnPosiotion;
+
+                Debug.Log("****************************************************");
+            }
+            
+
+        }
+
+
+
+        Debug.Log(enableSpawn);
+
+        if (enableSpawn == true)
+        {
+
+            Debug.Log(spawnPosiotion);
+            Debug.Log(enableSpawn);
+
+            enableSpawn = false;
+
+            Debug.Log(enableSpawn);
+        }
+        
+    }
+
+    void Start()
+    {
+        
+    }
+
+
+}
