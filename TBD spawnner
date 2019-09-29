@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+/*                              사용법
+
+    스폰될 오브젝트를 불가사리 라고 적힌 스크립트 창에 드래그 해서 삽입
+    카메라 오브젝트 이름이 Camera 이여야 하고
+    앞서 만들어놓은 스크립트가 들어가있어야함 [그래야 점수를 불러올수있음]
+  */
+
+
+
+
+public class BulgasliSpawn : MonoBehaviour
+{
+    public GameObject bulgasli; //우리가 사용할 prefab
+    int Remeber = 100;             // 이전 데이터 기억하기
+
+
+    void spawn_print(float posY)
+    {
+        float railLine = -6;
+        int random_pos = Random.Range(0, 2);           //2분의 1 확률로 생성좌표 약간 옮기기
+        if (random_pos == 0)
+            railLine = railLine - 1.5f;
+
+        Debug.Log(random_pos);
+        for (int i = 0; i < 5; i++)         // 5번 반복함
+        {
+            railLine += 3;                  // 반복마다 레일 위치를 3씩 옴겨서 5번 실행되도록함
+            int spawnPst = Random.Range(0, 5);  // 스폰될 확률 4분의1 확률로 지정
+            if (spawnPst == 0)
+            {
+                GameObject enemy = (GameObject)Instantiate(bulgasli, new Vector3(railLine, posY, this.transform.position.z), Quaternion.identity);
+                // 불가사리 생성
+            }
+        }
+    }
+
+
+    void Update()
+    {
+        float spawnPosiotion;
+        GameObject cam = GameObject.Find("Camera");     //카메라 받아옴
+        spawnPosiotion = cam.transform.position.y+40.0f;      // 카메라 포지션 y값 받아온거에 생성될위치 Ex) 40만큼 올더해준것
+        
+        camera_script cam_data = GameObject.Find("Camera").GetComponent<camera_script>();       //카메라에서 변수 가져올려고 인스턴스화시킴
+        int score = cam_data.score;                         // 점수를 이쪽변수에 저장
+
+        int test_data = (score + 1) % 20;               // 점수 나누기 20  20점마다 불가사리 생성 함수 실행
+        
+        if (test_data == 0)                         // 나누기 값이 0으로 떨어질떄 실행
+        {       
+            if(Remeber != score)                        // 이전데이터와 중첩현상 방지
+            {
+                spawn_print(spawnPosiotion);            // 불가사리 생성 함수 실행
+            }
+            Remeber = score;                        // 이전값 기억하고있기
+        }
+    }
+}
