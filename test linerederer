@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Line_Renderer : MonoBehaviour
+{
+    LineRenderer rl;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rl = GetComponent<LineRenderer>();
+        GameObject te = GameObject.Find("test");
+        float sx = te.GetComponent<CapsuleCollider2D>().size.x;
+        float sy = te.GetComponent<CapsuleCollider2D>().size.y;
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
