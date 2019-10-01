@@ -69,11 +69,19 @@ public class Tuch_script : MonoBehaviour
         if (Input.GetMouseButtonUp(0))          //버튼을 놓았을때 카운트 세서 다음번에 삭제 시켜줌
         {
 
-            float collX = endPos.x - startPos.x;
-            float collY = endPos.y - startPos.y;
+            float width = endPos.x - startPos.x;
+            float hight = endPos.y - startPos.y;
+
+/*
+
+            float radian = Mathf.Atan2(height,width);
+            float angle = radian * 180 / Mathf.PI;
+
+ 추가 생성 구문 직각 삼각형 각도 구해주는것
 
 
 
+*/
             count = 1;
             Start_Box = Instantiate(                // 마우스클릭시 시작 박스 동적 생산                    
                 Get_coll,
