@@ -35,6 +35,9 @@ public class Tuch_script : MonoBehaviour
     float width;
     float collBoxSize;
     bool max = true;
+    
+    
+    // vector movePos;
 
 
 
@@ -98,7 +101,7 @@ public class Tuch_script : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if(max==true)
+            if(max==true)       // 삭제 
             { 
             // 실시간으로 마우스 포지션 잡아서 박스 이동시켜주기 이게 제일 먼저 나와야함! 
             EnBox.transform.position = poin;
@@ -134,7 +137,6 @@ public class Tuch_script : MonoBehaviour
             //각도를 박스에 적용!
             StartBox.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(StartPos, endPos));
 
-
             //한놈만 돌아가면 불쌍하니까 너도 적용시켜줄께
             EnBox.transform.localRotation = Quaternion.Euler(0, 0, AngleInDeg(StartPos, endPos));
 
@@ -150,6 +152,10 @@ public class Tuch_script : MonoBehaviour
             if ((MouX - SartX) * (MouX - SartX) + (MouY - SartY) * (MouY - SartY) > 35.0f)
             {
                 max = false;
+                //movePos = Point - StartPos;
+                //point += movePos;
+                
+                
             }
             }
         } 
